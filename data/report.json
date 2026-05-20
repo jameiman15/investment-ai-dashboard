@@ -1,64 +1,64 @@
 {
-  "updated_at": "2026-05-20 10:01",
+  "updated_at": "2026-05-20 10:15",
   "market": {
     "risk_level": "中等",
-    "summary": "這是由 GitHub Actions 自動更新的測試內容。",
-    "overall_advice": "自動化測試成功，先觀察。"
+    "summary": "目前為自動化測試階段，市場資料尚未串接，先以投資清單健診為主。",
+    "overall_advice": "自動讀取投資清單成功"
   },
   "family_status": {
-    "status": "穩健",
-    "summary": "現金水位尚可，投資部位可續抱觀察。"
+    "status": "已建立多帳戶",
+    "summary": "目前已建立 5 個帳戶，共 3 個投資商品。"
   },
   "accounts": [
     {
       "name": "自己",
       "goal": "資產成長",
       "risk_profile": "穩健積極",
-      "advice": "續抱，等待回檔加碼"
+      "advice": "自己帳戶可依市場狀況彈性調整，已有獲利標的可設定停利條件。"
     },
     {
       "name": "家庭",
       "goal": "房貸與備用金",
       "risk_profile": "穩健",
-      "advice": "保留現金，不重壓高波動資產"
+      "advice": "家庭帳戶優先保留現金與房貸預備金，不建議重壓高波動資產。"
     },
     {
       "name": "老婆",
       "goal": "長期配置",
       "risk_profile": "穩健",
-      "advice": "ETF 與基金續抱"
+      "advice": "目前尚未建立投資商品，建議先補上持有標的。"
     },
     {
       "name": "小孩",
       "goal": "教育金",
       "risk_profile": "積極長期",
-      "advice": "長期續扣，不因短線波動停扣"
+      "advice": "小孩帳戶投資年限長，可偏長期成長，定期定額可持續。"
     },
     {
       "name": "媽媽",
       "goal": "退休與保守收益",
       "risk_profile": "保守",
-      "advice": "避免增加高波動商品"
+      "advice": "目前尚未建立投資商品，建議先補上持有標的。"
     }
   ],
   "watchlist": [
     {
-      "type": "個股",
-      "name": "2330 台積電",
-      "status": "趨勢尚未破壞",
-      "advice": "續抱，但設定移動停利"
-    },
-    {
       "type": "ETF",
-      "name": "0056 元大高股息",
-      "status": "偏穩定",
+      "name": "元大高股息（自己）",
+      "status": "適合配置型追蹤",
       "advice": "續抱，不追高"
     },
     {
       "type": "基金",
-      "name": "聯博國際科技基金",
-      "status": "波動較高",
-      "advice": "長期續抱，單筆加碼等待回檔"
+      "name": "聯博國際科技基金（小孩）",
+      "status": "需定期檢查績效與波動",
+      "advice": "長期續扣"
+    },
+    {
+      "type": "現金",
+      "name": "房貸預備金（家庭）",
+      "status": "資金預備",
+      "advice": "保留，不投入高波動資產"
     }
   ]
 }
