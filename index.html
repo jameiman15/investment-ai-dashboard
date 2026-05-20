@@ -14,35 +14,44 @@
     header {
       background: #1f2937;
       color: white;
-      padding: 24px;
+      padding: 48px 24px 36px;
       text-align: center;
     }
+    header h1 {
+      font-size: 40px;
+      margin: 0 0 20px;
+    }
+    header p {
+      font-size: 22px;
+      margin: 0 0 20px;
+    }
     main {
-      max-width: 1100px;
-      margin: 24px auto;
-      padding: 0 16px;
+      max-width: 1200px;
+      margin: 28px auto;
+      padding: 0 16px 40px;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
     }
     .card {
       background: white;
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     }
     .card h2 {
       margin-top: 0;
-      font-size: 18px;
+      font-size: 20px;
       color: #374151;
     }
     .value {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: bold;
-      margin: 8px 0;
+      margin: 12px 0;
+      line-height: 1.35;
     }
     .positive {
       color: #16a34a;
@@ -60,27 +69,34 @@
       width: 100%;
       border-collapse: collapse;
       background: white;
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-      margin-bottom: 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      margin-bottom: 28px;
     }
     th, td {
       padding: 14px;
       border-bottom: 1px solid #e5e7eb;
       text-align: left;
+      vertical-align: top;
     }
     th {
       background: #f3f4f6;
+      color: #374151;
+      white-space: nowrap;
+    }
+    tr:last-child td {
+      border-bottom: none;
     }
     .section-title {
-      margin-top: 32px;
-      margin-bottom: 12px;
-      font-size: 22px;
+      margin-top: 34px;
+      margin-bottom: 14px;
+      font-size: 24px;
+      color: #111827;
     }
     .updated {
-      font-size: 14px;
-      color: #6b7280;
+      font-size: 15px;
+      color: #94a3b8;
       margin-top: 8px;
     }
     .error {
@@ -89,6 +105,34 @@
       padding: 16px;
       border-radius: 12px;
       margin-top: 24px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      font-size: 13px;
+      color: #374151;
+    }
+    .note {
+      color: #6b7280;
+      font-size: 14px;
+      margin-top: -6px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 720px) {
+      header h1 {
+        font-size: 30px;
+      }
+      header p {
+        font-size: 18px;
+      }
+      table {
+        font-size: 14px;
+      }
+      th, td {
+        padding: 10px;
+      }
     }
   </style>
 </head>
@@ -112,13 +156,21 @@
       return "neutral";
     }
 
-    function renderDashboard(data) {
-      document.getElementById("updatedAt").textContent = "最後更新：" + data.updated_at;
+    function formatNumber(value) {
+      if (value === null || value === undefined || value === "") return "-";
+      if (typeof value === "number") {
+        return value.toLocaleString("zh-TW");
+      }
+      return value;
+    }
 
-      const riskClass = getRiskClass(data.market.risk_level);
-      const familyClass = getRiskClass(data.family_status.status);
+    function renderDashboard(report, portfolio) {
+      document.getElementById("updatedAt").textContent = "最後更新：" + report.updated_at;
 
-      const accountsRows = data.accounts.map(account => `
+      const riskClass = getRiskClass(report.market.risk_level);
+      const familyClass = getRiskClass(report.family_status.status);
+
+      const accountsRows = report.accounts.map(account => `
         <tr>
           <td>${account.name}</td>
           <td>${account.goal}</td>
@@ -127,12 +179,26 @@
         </tr>
       `).join("");
 
-      const watchlistRows = data.watchlist.map(item => `
+      const watchlistRows = report.watchlist.map(item => `
         <tr>
-          <td>${item.type}</td>
+          <td><span class="tag">${item.type}</span></td>
           <td>${item.name}</td>
           <td>${item.status}</td>
           <td>${item.advice}</td>
+        </tr>
+      `).join("");
+
+      const holdingsRows = portfolio.holdings.map(item => `
+        <tr>
+          <td>${item.account}</td>
+          <td><span class="tag">${item.type}</span></td>
+          <td>${item.symbol || "-"}</td>
+          <td>${item.name}</td>
+          <td>${item.currency}</td>
+          <td>${formatNumber(item.quantity)}</td>
+          <td>${formatNumber(item.avg_cost)}</td>
+          <td>${item.purpose}</td>
+          <td>${item.strategy}</td>
         </tr>
       `).join("");
 
@@ -140,19 +206,19 @@
         <div class="grid">
           <div class="card">
             <h2>今日市場風險</h2>
-            <div class="value ${riskClass}">${data.market.risk_level}</div>
-            <p>${data.market.summary}</p>
+            <div class="value ${riskClass}">${report.market.risk_level}</div>
+            <p>${report.market.summary}</p>
           </div>
 
           <div class="card">
             <h2>家庭總資產狀態</h2>
-            <div class="value ${familyClass}">${data.family_status.status}</div>
-            <p>${data.family_status.summary}</p>
+            <div class="value ${familyClass}">${report.family_status.status}</div>
+            <p>${report.family_status.summary}</p>
           </div>
 
           <div class="card">
             <h2>今日 AI 總建議</h2>
-            <div class="value neutral">${data.market.overall_advice}</div>
+            <div class="value neutral">${report.market.overall_advice}</div>
             <p>定期定額照扣，單筆加碼等待更明確訊號。</p>
           </div>
         </div>
@@ -186,22 +252,46 @@
             ${watchlistRows}
           </tbody>
         </table>
+
+        <h2 class="section-title">投資商品總表</h2>
+        <p class="note">目前先使用範例資料，之後可以改成你的真實帳戶，但公開網站不建議顯示完整金額。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>帳戶</th>
+              <th>類型</th>
+              <th>代號</th>
+              <th>商品名稱</th>
+              <th>幣別</th>
+              <th>數量</th>
+              <th>成本 / 本金</th>
+              <th>投資目的</th>
+              <th>策略</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${holdingsRows}
+          </tbody>
+        </table>
       `;
     }
 
-    fetch("data/report.json")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("無法讀取 data/report.json");
-        }
+    Promise.all([
+      fetch("data/report.json").then(response => {
+        if (!response.ok) throw new Error("無法讀取 data/report.json");
+        return response.json();
+      }),
+      fetch("data/portfolio.json").then(response => {
+        if (!response.ok) throw new Error("無法讀取 data/portfolio.json");
         return response.json();
       })
-      .then(data => renderDashboard(data))
+    ])
+      .then(([report, portfolio]) => renderDashboard(report, portfolio))
       .catch(error => {
         document.getElementById("app").innerHTML = `
           <div class="error">
             資料載入失敗：${error.message}<br>
-            請確認 data/report.json 是否已建立，且 JSON 格式正確。
+            請確認 data/report.json 與 data/portfolio.json 是否已建立，且 JSON 格式正確。
           </div>
         `;
       });
