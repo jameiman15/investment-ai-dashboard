@@ -53,6 +53,9 @@
     .danger {
       color: #dc2626;
     }
+    .neutral {
+      color: #2563eb;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -60,6 +63,7 @@
       border-radius: 14px;
       overflow: hidden;
       box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
     }
     th, td {
       padding: 14px;
@@ -74,110 +78,133 @@
       margin-bottom: 12px;
       font-size: 22px;
     }
+    .updated {
+      font-size: 14px;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 24px;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>AI 投資健診儀表板</h1>
     <p>個股 / ETF / 基金 / 多帳戶資產總覽</p>
+    <div class="updated" id="updatedAt">資料載入中...</div>
   </header>
 
   <main>
-    <div class="grid">
-      <div class="card">
-        <h2>今日市場風險</h2>
-        <div class="value warning">中等</div>
-        <p>科技股短線震盪，建議不追高。</p>
-      </div>
-
-      <div class="card">
-        <h2>家庭總資產狀態</h2>
-        <div class="value positive">穩健</div>
-        <p>現金水位尚可，投資部位可續抱觀察。</p>
-      </div>
-
-      <div class="card">
-        <h2>今日 AI 總建議</h2>
-        <div class="value">觀望</div>
-        <p>定期定額照扣，單筆加碼等待回檔。</p>
-      </div>
-    </div>
-
-    <h2 class="section-title">帳戶總覽</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>帳戶</th>
-          <th>投資目的</th>
-          <th>風險屬性</th>
-          <th>AI 建議</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>自己</td>
-          <td>資產成長</td>
-          <td>穩健積極</td>
-          <td>續抱，等待回檔加碼</td>
-        </tr>
-        <tr>
-          <td>家庭</td>
-          <td>房貸與備用金</td>
-          <td>穩健</td>
-          <td>保留現金，不重壓高波動資產</td>
-        </tr>
-        <tr>
-          <td>老婆</td>
-          <td>長期配置</td>
-          <td>穩健</td>
-          <td>ETF 與基金續抱</td>
-        </tr>
-        <tr>
-          <td>小孩</td>
-          <td>教育金</td>
-          <td>積極長期</td>
-          <td>長期續扣，不因短線波動停扣</td>
-        </tr>
-        <tr>
-          <td>媽媽</td>
-          <td>退休與保守收益</td>
-          <td>保守</td>
-          <td>避免增加高波動商品</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2 class="section-title">今日需要注意的標的</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>類型</th>
-          <th>名稱</th>
-          <th>狀態</th>
-          <th>AI 建議</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>個股</td>
-          <td>2330 台積電</td>
-          <td>趨勢尚未破壞</td>
-          <td>續抱，但設定移動停利</td>
-        </tr>
-        <tr>
-          <td>ETF</td>
-          <td>0056 元大高股息</td>
-          <td>偏穩定</td>
-          <td>續抱，不追高</td>
-        </tr>
-        <tr>
-          <td>基金</td>
-          <td>聯博國際科技基金</td>
-          <td>波動較高</td>
-          <td>長期續抱，單筆加碼等待回檔</td>
-        </tr>
-      </tbody>
-    </table>
+    <div id="app">資料載入中...</div>
   </main>
+
+  <script>
+    function getRiskClass(text) {
+      if (!text) return "neutral";
+      if (text.includes("高")) return "danger";
+      if (text.includes("中")) return "warning";
+      if (text.includes("低") || text.includes("穩健")) return "positive";
+      return "neutral";
+    }
+
+    function renderDashboard(data) {
+      document.getElementById("updatedAt").textContent = "最後更新：" + data.updated_at;
+
+      const riskClass = getRiskClass(data.market.risk_level);
+      const familyClass = getRiskClass(data.family_status.status);
+
+      const accountsRows = data.accounts.map(account => `
+        <tr>
+          <td>${account.name}</td>
+          <td>${account.goal}</td>
+          <td>${account.risk_profile}</td>
+          <td>${account.advice}</td>
+        </tr>
+      `).join("");
+
+      const watchlistRows = data.watchlist.map(item => `
+        <tr>
+          <td>${item.type}</td>
+          <td>${item.name}</td>
+          <td>${item.status}</td>
+          <td>${item.advice}</td>
+        </tr>
+      `).join("");
+
+      document.getElementById("app").innerHTML = `
+        <div class="grid">
+          <div class="card">
+            <h2>今日市場風險</h2>
+            <div class="value ${riskClass}">${data.market.risk_level}</div>
+            <p>${data.market.summary}</p>
+          </div>
+
+          <div class="card">
+            <h2>家庭總資產狀態</h2>
+            <div class="value ${familyClass}">${data.family_status.status}</div>
+            <p>${data.family_status.summary}</p>
+          </div>
+
+          <div class="card">
+            <h2>今日 AI 總建議</h2>
+            <div class="value neutral">${data.market.overall_advice}</div>
+            <p>定期定額照扣，單筆加碼等待更明確訊號。</p>
+          </div>
+        </div>
+
+        <h2 class="section-title">帳戶總覽</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>帳戶</th>
+              <th>投資目的</th>
+              <th>風險屬性</th>
+              <th>AI 建議</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${accountsRows}
+          </tbody>
+        </table>
+
+        <h2 class="section-title">今日需要注意的標的</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>類型</th>
+              <th>名稱</th>
+              <th>狀態</th>
+              <th>AI 建議</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${watchlistRows}
+          </tbody>
+        </table>
+      `;
+    }
+
+    fetch("data/report.json")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("無法讀取 data/report.json");
+        }
+        return response.json();
+      })
+      .then(data => renderDashboard(data))
+      .catch(error => {
+        document.getElementById("app").innerHTML = `
+          <div class="error">
+            資料載入失敗：${error.message}<br>
+            請確認 data/report.json 是否已建立，且 JSON 格式正確。
+          </div>
+        `;
+      });
+  </script>
 </body>
 </html>
