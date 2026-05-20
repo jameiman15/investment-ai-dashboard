@@ -1,0 +1,69 @@
+{
+  "accounts": [
+    {
+      "account": "自己",
+      "owner": "本人",
+      "goal": "資產成長",
+      "risk_profile": "穩健積極"
+    },
+    {
+      "account": "家庭",
+      "owner": "家庭共同",
+      "goal": "房貸與備用金",
+      "risk_profile": "穩健"
+    },
+    {
+      "account": "老婆",
+      "owner": "太太",
+      "goal": "長期配置",
+      "risk_profile": "穩健"
+    },
+    {
+      "account": "小孩",
+      "owner": "小孩",
+      "goal": "教育金",
+      "risk_profile": "積極長期"
+    },
+    {
+      "account": "媽媽",
+      "owner": "媽媽",
+      "goal": "退休與保守收益",
+      "risk_profile": "保守"
+    }
+  ],
+  "holdings": [
+    {
+      "account": "自己",
+      "type": "ETF",
+      "symbol": "0056",
+      "name": "元大高股息",
+      "currency": "TWD",
+      "quantity": 1000,
+      "avg_cost": 36,
+      "purpose": "配息",
+      "strategy": "續抱，不追高"
+    },
+    {
+      "account": "小孩",
+      "type": "基金",
+      "symbol": "",
+      "name": "聯博國際科技基金",
+      "currency": "TWD",
+      "quantity": 0,
+      "avg_cost": 100000,
+      "purpose": "教育金長期成長",
+      "strategy": "長期續扣"
+    },
+    {
+      "account": "家庭",
+      "type": "現金",
+      "symbol": "",
+      "name": "房貸預備金",
+      "currency": "TWD",
+      "quantity": 0,
+      "avg_cost": 1000000,
+      "purpose": "房貸與緊急預備金",
+      "strategy": "保留，不投入高波動資產"
+    }
+  ]
+}
