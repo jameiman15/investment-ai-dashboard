@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 投資健診儀表板</title>
+  <style>
+    body {
+      font-family: "Noto Sans TC", Arial, sans-serif;
+      margin: 0;
+      background: #f5f6fa;
+      color: #222;
+    }
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 24px;
+      text-align: center;
+    }
+    main {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #374151;
+    }
+    .value {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+    .positive {
+      color: #16a34a;
+    }
+    .warning {
+      color: #f59e0b;
+    }
+    .danger {
+      color: #dc2626;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+    th, td {
+      padding: 14px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+    th {
+      background: #f3f4f6;
+    }
+    .section-title {
+      margin-top: 32px;
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI 投資健診儀表板</h1>
+    <p>個股 / ETF / 基金 / 多帳戶資產總覽</p>
+  </header>
+
+  <main>
+    <div class="grid">
+      <div class="card">
+        <h2>今日市場風險</h2>
+        <div class="value warning">中等</div>
+        <p>科技股短線震盪，建議不追高。</p>
+      </div>
+
+      <div class="card">
+        <h2>家庭總資產狀態</h2>
+        <div class="value positive">穩健</div>
+        <p>現金水位尚可，投資部位可續抱觀察。</p>
+      </div>
+
+      <div class="card">
+        <h2>今日 AI 總建議</h2>
+        <div class="value">觀望</div>
+        <p>定期定額照扣，單筆加碼等待回檔。</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">帳戶總覽</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>帳戶</th>
+          <th>投資目的</th>
+          <th>風險屬性</th>
+          <th>AI 建議</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>自己</td>
+          <td>資產成長</td>
+          <td>穩健積極</td>
+          <td>續抱，等待回檔加碼</td>
+        </tr>
+        <tr>
+          <td>家庭</td>
+          <td>房貸與備用金</td>
+          <td>穩健</td>
+          <td>保留現金，不重壓高波動資產</td>
+        </tr>
+        <tr>
+          <td>老婆</td>
+          <td>長期配置</td>
+          <td>穩健</td>
+          <td>ETF 與基金續抱</td>
+        </tr>
+        <tr>
+          <td>小孩</td>
+          <td>教育金</td>
+          <td>積極長期</td>
+          <td>長期續扣，不因短線波動停扣</td>
+        </tr>
+        <tr>
+          <td>媽媽</td>
+          <td>退休與保守收益</td>
+          <td>保守</td>
+          <td>避免增加高波動商品</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="section-title">今日需要注意的標的</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>類型</th>
+          <th>名稱</th>
+          <th>狀態</th>
+          <th>AI 建議</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>個股</td>
+          <td>2330 台積電</td>
+          <td>趨勢尚未破壞</td>
+          <td>續抱，但設定移動停利</td>
+        </tr>
+        <tr>
+          <td>ETF</td>
+          <td>0056 元大高股息</td>
+          <td>偏穩定</td>
+          <td>續抱，不追高</td>
+        </tr>
+        <tr>
+          <td>基金</td>
+          <td>聯博國際科技基金</td>
+          <td>波動較高</td>
+          <td>長期續抱，單筆加碼等待回檔</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>
