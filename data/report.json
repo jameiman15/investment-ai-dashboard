@@ -1,0 +1,64 @@
+{
+  "updated_at": "2026-05-20 08:00",
+  "market": {
+    "risk_level": "中等",
+    "summary": "科技股短線震盪，建議不追高。",
+    "overall_advice": "觀望"
+  },
+  "family_status": {
+    "status": "穩健",
+    "summary": "現金水位尚可，投資部位可續抱觀察。"
+  },
+  "accounts": [
+    {
+      "name": "自己",
+      "goal": "資產成長",
+      "risk_profile": "穩健積極",
+      "advice": "續抱，等待回檔加碼"
+    },
+    {
+      "name": "家庭",
+      "goal": "房貸與備用金",
+      "risk_profile": "穩健",
+      "advice": "保留現金，不重壓高波動資產"
+    },
+    {
+      "name": "老婆",
+      "goal": "長期配置",
+      "risk_profile": "穩健",
+      "advice": "ETF 與基金續抱"
+    },
+    {
+      "name": "小孩",
+      "goal": "教育金",
+      "risk_profile": "積極長期",
+      "advice": "長期續扣，不因短線波動停扣"
+    },
+    {
+      "name": "媽媽",
+      "goal": "退休與保守收益",
+      "risk_profile": "保守",
+      "advice": "避免增加高波動商品"
+    }
+  ],
+  "watchlist": [
+    {
+      "type": "個股",
+      "name": "2330 台積電",
+      "status": "趨勢尚未破壞",
+      "advice": "續抱，但設定移動停利"
+    },
+    {
+      "type": "ETF",
+      "name": "0056 元大高股息",
+      "status": "偏穩定",
+      "advice": "續抱，不追高"
+    },
+    {
+      "type": "基金",
+      "name": "聯博國際科技基金",
+      "status": "波動較高",
+      "advice": "長期續抱，單筆加碼等待回檔"
+    }
+  ]
+}
